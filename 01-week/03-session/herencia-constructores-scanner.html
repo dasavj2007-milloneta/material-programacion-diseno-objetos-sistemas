@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herencia y Polimorfismo - Sistema de Empleados | Ingeniería de Sistemas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 5px 0;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    padding: 50px 0;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 2em;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Divider */
+.divider {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 40px 0;
+}
+
+.divider-thick {
+    border: none;
+    border-top: 3px solid var(--accent-color);
+    margin: 50px 0;
+}
+
+/* Definition Box */
+.definition-box {
+    background-color: #e8f4f8;
+    border-left: 5px solid var(--secondary-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.05em;
+}
+
+/* Reflection Box */
+.reflection-box {
+    background-color: #fff3cd;
+    border-left: 5px solid var(--warning-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.reflection-box h4 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.reflection-box p {
+    color: #856404;
+    line-height: 1.7;
+}
+
+.reflection-box ul {
+    margin-left: 20px;
+    color: #856404;
+}
+
+.reflection-box li {
+    margin-bottom: 8px;
+}
+
+/* Info Box */
+.info-box {
+    background-color: #d1ecf1;
+    border-left: 5px solid var(--info-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.info-box h4 {
+    color: #0c5460;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    color: #0c5460;
+    line-height: 1.7;
+}
+
+.info-box ul {
+    margin-left: 20px;
+    color: #0c5460;
+}
+
+/* Success Box */
+.success-box {
+    background-color: #d4edda;
+    border-left: 5px solid var(--success-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.success-box h4 {
+    color: #155724;
+    margin-bottom: 10px;
+}
+
+.success-box p {
+    color: #155724;
+    line-height: 1.7;
+}
+
+/* Warning Box */
+.warning-box {
+    background-color: #f8d7da;
+    border-left: 5px solid #dc3545;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.warning-box h4 {
+    color: #721c24;
+    margin-bottom: 10px;
+}
+
+.warning-box p {
+    color: #721c24;
+    line-height: 1.7;
+}
+
+.warning-box ul {
+    margin-left: 20px;
+    color: #721c24;
+}
+
+/* Step Box */
+.step-box {
+    background-color: var(--light-bg);
+    border-left: 4px solid var(--info-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.step-num {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 35px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.step-box h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Comparison Cards */
+.comparison-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h3,
+.card h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Strategy Grid */
+.strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.strategy-box {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.strategy-box h5 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.strategy-box ul {
+    list-style-position: inside;
+    margin-left: 10px;
+}
+
+.strategy-box li {
+    margin-bottom: 8px;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+    margin: 30px 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table thead tr {
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: left;
+    font-weight: 500;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.styled-table tbody tr:hover {
+    background-color: var(--light-bg);
+}
+
+.styled-table tbody tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+/* Code Blocks */
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    position: relative;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--primary-color);
+}
+
+pre code {
+    background-color: transparent;
+    color: #f8f8f2;
+    padding: 0;
+}
+
+/* Diagram Box */
+.diagram-box {
+    background-color: #f0f8ff;
+    border: 2px solid var(--info-color);
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
+}
+
+.diagram-box pre {
+    background-color: transparent;
+    color: var(--dark-text);
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+/* Case Study Section */
+.case-study-section {
+    background-color: var(--light-bg);
+    padding: 40px;
+    border-radius: 10px;
+    margin: 40px 0;
+}
+
+.case-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.case-header h2 {
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.case-header h3 {
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+.scenario-box {
+    background: white;
+    border-left: 4px solid var(--accent-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.scenario-box h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Footer */
+.main-footer {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+.main-footer p {
+    margin: 8px 0;
+    font-size: 0.95em;
+}
+
+.main-footer ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.main-footer li {
+    margin: 8px 0;
+}
+
+.main-footer a {
+    color: #fff9e6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-footer a:hover {
+    color: var(--accent-color);
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    transition: background-color 0.3s;
+}
+
+#scrollTopBtn:hover {
+    background-color: var(--accent-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 15px 0;
+    margin-left: 30px;
+}
+
+li {
+    margin: 8px 0;
+    line-height: 1.7;
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    .hero-section {
+        padding: 40px 20px;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+    }
+    
+    .main-nav a {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .comparison-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .strategy-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container brand-container">
+                <h1 class="brand-name" style="color: white;">Herencia, Constructores y Scanner en Java</h1>
+                <p style="color: white;">Sistema de Gestión de Empleados - Paso a Paso</p>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#introduccion">Introducción</a></li>
+                    <li><a href="#estructura">Estructura del Caso</a></li>
+                    <li><a href="#superclase">Crear SuperClase</a></li>
+                    <li><a href="#subclases">Crear Subclases</a></li>
+                    <li><a href="#constructores">Constructores</a></li>
+                    <li><a href="#parametros">Paso de Parámetros</a></li>
+                    <li><a href="#scanner">Scanner en Java</a></li>
+                    <li><a href="#desarrollo">Desarrollo Completo</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container main-content">
+
+        <section id="introduccion" class="hero-section">
+            <h1>Herencia, Constructores y Scanner en Java</h1>
+            <p class="lead">
+                Aprenderás a crear una SuperClase que será heredada por tres SubClases diferentes. 
+                Dominarás los constructores, el paso de parámetros por valor y referencia, 
+                y usarás Scanner para capturar entrada del usuario en IntelliJ IDEA.
+            </p>
+        </section>
+
+        <hr class="divider">
+
+        <section id="estructura" class="case-study-section">
+            <div class="case-header">
+                <h2>1. Estructura del Caso de Estudio</h2>
+                <h3>Sistema de Gestión de Empleados de una Empresa</h3>
+            </div>
+
+            <p>
+                Crearás un sistema para una empresa que gestiona tres tipos de empleados: 
+                <strong>Ingenieros</strong>, <strong>Contadores</strong> y <strong>Vendedores</strong>.
+            </p>
+
+            <h3>El Escenario</h3>
+            <div class="scenario-box">
+                <h4>📋 Caso: Empresa "TechSolutions"</h4>
+                <p>
+                    TechSolutions necesita un sistema para registrar y gestionar información de sus empleados. 
+                    Cada empleado tiene datos generales (nombre, id, salario base), pero cada tipo de empleado 
+                    tiene características especiales:
+                </p>
+                <ul>
+                    <li><strong>Ingeniero:</strong> Especialidad técnica, años de experiencia, lenguajes de programación</li>
+                    <li><strong>Contador:</strong> Número de clientes a cargo, tipo de certificación, auditorías realizadas</li>
+                    <li><strong>Vendedor:</strong> Zona de ventas, comisión por ventas, meta mensual</li>
+                </ul>
+            </div>
+
+            <h3>Jerarquía de Clases</h3>
+            <div class="diagram-box">
+                <pre>
+                    ┌─────────────────────────────────┐
+                    │      EMPLEADO (SuperClase)      │
+                    │  • id: String                   │
+                    │  • nombre: String               │
+                    │  • salarioBase: double          │
+                    │  • constructor()                │
+                    │  • calcularSalario()            │
+                    │  • mostrarInfo()                │
+                    └────────────┬────────────────────┘
+                                 │
+                ┌────────────────┼────────────────┐
+                │                │                │
+        ┌───────┴──────┐  ┌──────┴──────┐  ┌─────┴─────┐
+        │  INGENIERO   │  │  CONTADOR   │  │ VENDEDOR  │
+        │  (SubClase)  │  │ (SubClase)  │  │(SubClase) │
+        ├──────────────┤  ├─────────────┤  ├───────────┤
+        │+especialidad │  │+clientes    │  │+zona      │
+        │+experiencia  │  │+certificado │  │+comisión  │
+        │+lenguajes    │  │+auditorías  │  │+meta      │
+        └──────────────┘  └─────────────┘  └───────────┘
+                </pre>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ Conceptos a Aplicar</h4>
+                <ul>
+                    <li><strong>Herencia:</strong> Las 3 subclases extienden de Empleado</li>
+                    <li><strong>Constructores:</strong> Cada clase inicializa sus atributos</li>
+                    <li><strong>Paso por Valor:</strong> int, double, boolean (tipos primitivos)</li>
+                    <li><strong>Paso por Referencia:</strong> String, objetos</li>
+                    <li><strong>Scanner:</strong> Para capturar datos del usuario</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="superclase" class="case-study-section">
+            <div class="case-header">
+                <h2>2. Crear la SuperClase Empleado</h2>
+                <h3>La Clase Base para Todos los Empleados</h3>
+            </div>
+
+            <h3>Paso 1: Crear el Proyecto en IntelliJ IDEA</h3>
+            <div class="step-box">
+                <h4><span class="step-num">1</span>Abrir IntelliJ IDEA</h4>
+                <p>Inicia IntelliJ IDEA. Si ves la pantalla de inicio, haz clic en <strong>"New Project"</strong>.</p>
+            </div>
+
+            <div class="step-box">
+                <h4><span class="step-num">2</span>Configurar el Proyecto</h4>
+                <p>En la ventana de nuevo proyecto:</p>
+                <ul>
+                    <li><strong>Project name:</strong> <code>SistemaEmpleados</code></li>
+                    <li><strong>Location:</strong> Elige una carpeta donde guardar</li>
+                    <li><strong>Language:</strong> Java</li>
+                    <li><strong>Build system:</strong> IntelliJ (dejar por defecto)</li>
+                    <li><strong>JDK:</strong> Selecciona Java 11 o superior</li>
+                </ul>
+                <p>Haz clic en <strong>"Create"</strong>.</p>
+            </div>
+
+            <div class="step-box">
+                <h4><span class="step-num">3</span>Crear el Paquete</h4>
+                <p>En el árbol del proyecto (izquierda), expande <strong>"src"</strong>.</p>
+                <p>Haz clic derecho sobre la carpeta <strong>"src"</strong> → <strong>"New"</strong> → <strong>"Package"</strong>.</p>
+                <p>Llámalo: <code>com.techsolutions.empresa</code></p>
+            </div>
+
+            <h3>Paso 2: Crear la Clase Empleado</h3>
+            <div class="step-box">
+                <h4><span class="step-num">4</span>Crear la clase</h4>
+                <p>Haz clic derecho en el paquete que creaste → <strong>"New"</strong> → <strong>"Java Class"</strong>.</p>
+                <p>Llámala: <code>Empleado</code></p>
+            </div>
+
+            <h3>Código de la SuperClase</h3>
+            <p>Aquí está el código completo de la SuperClase. Cópialo en tu archivo <code>Empleado.java</code>:</p>
+
+            <pre><code>package com.techsolutions.empresa;
+
+public class Empleado {
+    // ATRIBUTOS (datos generales de cualquier empleado)
+    protected String id;
+    protected String nombre;
+    protected double salarioBase;
+    
+    // CONSTRUCTOR - Inicializa los datos del empleado
+    public Empleado(String id, String nombre, double salarioBase) {
+        this.id = id;
+        this.nombre = nombre;
+        this.salarioBase = salarioBase;
+    }
+    
+    // GETTERS - Métodos para obtener valores
+    public String getId() {
+        return id;
+    }
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public double getSalarioBase() {
+        return salarioBase;
+    }
+    
+    // SETTERS - Métodos para modificar valores
+    public void setNombre(String nombre) {
+        if (nombre != null && !nombre.isEmpty()) {
+            this.nombre = nombre;
+        } else {
+            System.out.println("El nombre no puede estar vacío");
+        }
+    }
+    
+    public void setSalarioBase(double salario) {
+        if (salario > 0) {
+            this.salarioBase = salario;
+        } else {
+            System.out.println("El salario debe ser positivo");
+        }
+    }
+    
+    // MÉTODOS GENERALES
+    
+    // Método para calcular el salario (será sobrescrito por subclases)
+    public double calcularSalario() {
+        return salarioBase;
+    }
+    
+    // Método para mostrar información del empleado
+    public void mostrarInfo() {
+        System.out.println("════════════════════════════════════");
+        System.out.println("📦 Información del Empleado");
+        System.out.println("════════════════════════════════════");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.printf("Salario Base: $%.2f%n", salarioBase);
+        System.out.printf("Salario Total: $%.2f%n", calcularSalario());
+        System.out.println("════════════════════════════════════");
+    }
+}</code></pre>
+
+            <h3>Explicación del Código</h3>
+            <div class="reflection-box">
+                <h4>🔍 Entendiendo la SuperClase</h4>
+                <ul>
+                    <li><strong>protected:</strong> Los atributos son <code>protected</code> para que las subclases puedan acceder</li>
+                    <li><strong>Constructor:</strong> Recibe id, nombre y salario. Inicializa todos los atributos</li>
+                    <li><strong>Getters/Setters:</strong> Permiten acceder y modificar datos de forma controlada</li>
+                    <li><strong>calcularSalario():</strong> Método que las subclases sobrescribirán (polimorfismo)</li>
+                    <li><strong>mostrarInfo():</strong> Muestra los datos formateados de forma bonita</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ SuperClase Creada</h4>
+                <p>Felicidades! Creaste la SuperClase Empleado. Ahora las tres SubClases heredarán de ella.</p>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="subclases" class="case-study-section">
+            <div class="case-header">
+                <h2>3. Crear las Tres SubClases</h2>
+                <h3>Ingeniero, Contador y Vendedor</h3>
+            </div>
+
+            <h3>SubClase 1: Ingeniero</h3>
+            <div class="step-box">
+                <h4><span class="step-num">1</span>Crear la clase Ingeniero</h4>
+                <p>Haz clic derecho en el paquete → <strong>"New"</strong> → <strong>"Java Class"</strong></p>
+                <p>Llámala: <code>Ingeniero</code></p>
+            </div>
+
+            <p><strong>Código de Ingeniero.java:</strong></p>
+            <pre><code>package com.techsolutions.empresa;
+
+public class Ingeniero extends Empleado {
+    // ATRIBUTOS ESPECÍFICOS DEL INGENIERO
+    private String especialidad;      // Ej: "Programación", "DevOps"
+    private int añosExperiencia;      // Número de años
+    private String lenguajesPrimarios; // Lenguajes que domina
+    
+    // CONSTRUCTOR
+    public Ingeniero(String id, String nombre, double salarioBase, 
+                    String especialidad, int añosExperiencia, String lenguajesPrimarios) {
+        super(id, nombre, salarioBase); // Llamar al constructor de la SuperClase
+        this.especialidad = especialidad;
+        this.añosExperiencia = añosExperiencia;
+        this.lenguajesPrimarios = lenguajesPrimarios;
+    }
+    
+    // GETTERS
+    public String getEspecialidad() {
+        return especialidad;
+    }
+    
+    public int getAñosExperiencia() {
+        return añosExperiencia;
+    }
+    
+    public String getLenguajesPrimarios() {
+        return lenguajesPrimarios;
+    }
+    
+    // SETTERS
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+    
+    public void setAñosExperiencia(int años) {
+        if (años > 0) {
+            this.añosExperiencia = años;
+        }
+    }
+    
+    // MÉTODO SOBRESCRITO: Calcular salario con bonificación por experiencia
+    @Override
+    public double calcularSalario() {
+        double bonificacion = salarioBase * (añosExperiencia * 0.05); // 5% por año
+        return salarioBase + bonificacion;
+    }
+    
+    // MÉTODO SOBRESCRITO: Mostrar información específica
+    @Override
+    public void mostrarInfo() {
+        System.out.println("════════════════════════════════════");
+        System.out.println("👨‍💻 Información del INGENIERO");
+        System.out.println("════════════════════════════════════");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Especialidad: " + especialidad);
+        System.out.println("Años de Experiencia: " + añosExperiencia);
+        System.out.println("Lenguajes: " + lenguajesPrimarios);
+        System.out.printf("Salario Base: $%.2f%n", salarioBase);
+        System.out.printf("Bonificación por Experiencia: $%.2f%n", calcularSalario() - salarioBase);
+        System.out.printf("Salario Total: $%.2f%n", calcularSalario());
+        System.out.println("════════════════════════════════════");
+    }
+}</code></pre>
+
+            <h3>SubClase 2: Contador</h3>
+            <div class="step-box">
+                <h4><span class="step-num">2</span>Crear la clase Contador</h4>
+                <p>Haz clic derecho en el paquete → <strong>"New"</strong> → <strong>"Java Class"</strong></p>
+                <p>Llámala: <code>Contador</code></p>
+            </div>
+
+            <p><strong>Código de Contador.java:</strong></p>
+            <pre><code>package com.techsolutions.empresa;
+
+public class Contador extends Empleado {
+    // ATRIBUTOS ESPECÍFICOS DEL CONTADOR
+    private int clientesAcargo;       // Cantidad de clientes
+    private String tipoCertificacion; // Ej: "CPA", "Contador Público"
+    private int auditoriadosRealizadas; // Número de auditorías
+    
+    // CONSTRUCTOR
+    public Contador(String id, String nombre, double salarioBase,
+                   int clientesAcargo, String tipoCertificacion, int auditoriasRealizadas) {
+        super(id, nombre, salarioBase);
+        this.clientesAcargo = clientesAcargo;
+        this.tipoCertificacion = tipoCertificacion;
+        this.auditoriadosRealizadas = auditoriasRealizadas;
+    }
+    
+    // GETTERS
+    public int getClientesAcargo() {
+        return clientesAcargo;
+    }
+    
+    public String getTipoCertificacion() {
+        return tipoCertificacion;
+    }
+    
+    public int getAuditoriasRealizadas() {
+        return auditoriadosRealizadas;
+    }
+    
+    // SETTERS
+    public void setClientesAcargo(int clientes) {
+        if (clientes >= 0) {
+            this.clientesAcargo = clientes;
+        }
+    }
+    
+    public void setAuditoriasRealizadas(int auditorias) {
+        if (auditorias >= 0) {
+            this.auditoriadosRealizadas = auditorias;
+        }
+    }
+    
+    // MÉTODO SOBRESCRITO: Calcular salario con bonificación por clientes
+    @Override
+    public double calcularSalario() {
+        double bonificacionClientes = clientesAcargo * 500; // $500 por cliente
+        return salarioBase + bonificacionClientes;
+    }
+    
+    // MÉTODO SOBRESCRITO: Mostrar información específica
+    @Override
+    public void mostrarInfo() {
+        System.out.println("════════════════════════════════════");
+        System.out.println("📊 Información del CONTADOR");
+        System.out.println("════════════════════════════════════");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Certificación: " + tipoCertificacion);
+        System.out.println("Clientes a Cargo: " + clientesAcargo);
+        System.out.println("Auditorías Realizadas: " + auditoriadosRealizadas);
+        System.out.printf("Salario Base: $%.2f%n", salarioBase);
+        System.out.printf("Bonificación por Clientes: $%.2f%n", calcularSalario() - salarioBase);
+        System.out.printf("Salario Total: $%.2f%n", calcularSalario());
+        System.out.println("════════════════════════════════════");
+    }
+}</code></pre>
+
+            <h3>SubClase 3: Vendedor</h3>
+            <div class="step-box">
+                <h4><span class="step-num">3</span>Crear la clase Vendedor</h4>
+                <p>Haz clic derecho en el paquete → <strong>"New"</strong> → <strong>"Java Class"</strong></p>
+                <p>Llámala: <code>Vendedor</code></p>
+            </div>
+
+            <p><strong>Código de Vendedor.java:</strong></p>
+            <pre><code>package com.techsolutions.empresa;
+
+public class Vendedor extends Empleado {
+    // ATRIBUTOS ESPECÍFICOS DEL VENDEDOR
+    private String zonaVentas;    // Ej: "Centro", "Sur", "Norte"
+    private double porcentajeComision; // % de comisión sobre ventas
+    private double metaMensual;   // Meta de ventas mensual
+    
+    // CONSTRUCTOR
+    public Vendedor(String id, String nombre, double salarioBase,
+                   String zonaVentas, double porcentajeComision, double metaMensual) {
+        super(id, nombre, salarioBase);
+        this.zonaVentas = zonaVentas;
+        this.porcentajeComision = porcentajeComision;
+        this.metaMensual = metaMensual;
+    }
+    
+    // GETTERS
+    public String getZonaVentas() {
+        return zonaVentas;
+    }
+    
+    public double getPorcentajeComision() {
+        return porcentajeComision;
+    }
+    
+    public double getMetaMensual() {
+        return metaMensual;
+    }
+    
+    // SETTERS
+    public void setZonaVentas(String zona) {
+        this.zonaVentas = zona;
+    }
+    
+    public void setPorcentajeComision(double porcentaje) {
+        if (porcentaje >= 0 && porcentaje <= 100) {
+            this.porcentajeComision = porcentaje;
+        }
+    }
+    
+    public void setMetaMensual(double meta) {
+        if (meta > 0) {
+            this.metaMensual = meta;
+        }
+    }
+    
+    // MÉTODO SOBRESCRITO: Calcular salario base (sin comisión aquí)
+    @Override
+    public double calcularSalario() {
+        // En un caso real, se agregaría la comisión real de ventas
+        // Por ahora solo retorna el salario base
+        return salarioBase;
+    }
+    
+    // Método específico: Calcular comisión por ventas
+    public double calcularComision(double ventasReales) {
+        return ventasReales * (porcentajeComision / 100);
+    }
+    
+    // Método específico: Calcular salario total con comisión
+    public double calcularSalarioConComision(double ventasReales) {
+        double comision = calcularComision(ventasReales);
+        return salarioBase + comision;
+    }
+    
+    // MÉTODO SOBRESCRITO: Mostrar información específica
+    @Override
+    public void mostrarInfo() {
+        System.out.println("════════════════════════════════════");
+        System.out.println("💰 Información del VENDEDOR");
+        System.out.println("════════════════════════════════════");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Zona de Ventas: " + zonaVentas);
+        System.out.println("Porcentaje de Comisión: " + porcentajeComision + "%");
+        System.out.printf("Meta Mensual: $%.2f%n", metaMensual);
+        System.out.printf("Salario Base: $%.2f%n", salarioBase);
+        System.out.printf("Salario Total: $%.2f%n", calcularSalario());
+        System.out.println("════════════════════════════════════");
+    }
+}</code></pre>
+
+            <div class="success-box">
+                <h4>✅ SubClases Creadas</h4>
+                <p>Ahora tienes 3 subclases que heredan de Empleado con sus propias características y métodos sobrescritos.</p>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="constructores" class="case-study-section">
+            <div class="case-header">
+                <h2>4. Entendiendo Constructores</h2>
+                <h3>Inicialización de Objetos</h3>
+            </div>
+
+            <h3>¿Qué es un Constructor?</h3>
+            <div class="definition-box">
+                <strong>Constructor:</strong> Método especial que se ejecuta automáticamente cuando creas un objeto. 
+                Inicializa los atributos del objeto con valores iniciales. Se asegura que el objeto esté en un estado válido desde el principio.
+            </div>
+
+            <h3>Características de los Constructores</h3>
+            <div class="strategy-grid">
+                <div class="strategy-box">
+                    <h5>Mismo nombre que la clase</h5>
+                    <p>El constructor debe llamarse exactamente como la clase.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Sin tipo de retorno</h5>
+                    <p>No devuelven nada, ni siquiera <code>void</code>.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Se ejecuta automáticamente</h5>
+                    <p>Se llama al usar <code>new NombreClase()</code></p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Puede haber varios</h5>
+                    <p>Sobrecarga: múltiples constructores con diferentes parámetros.</p>
+                </div>
+            </div>
+
+            <h3>Ejemplo: Flujo de Creación de un Objeto</h3>
+            <pre><code>// Cuando ejecutas esta línea:
+Ingeniero ing = new Ingeniero("ENG001", "Juan García", 5000, 
+                              "Programación", 5, "Java, Python");
+
+// Ocurre lo siguiente:
+// 1. Se reserva espacio en memoria para el nuevo objeto
+// 2. Se ejecuta el constructor de Ingeniero con los parámetros dados
+// 3. El constructor llama a super() para ejecutar el constructor de Empleado
+// 4. Se inicializan todos los atributos
+// 5. El objeto está listo para usar</code></pre>
+
+            <h3>Constructor con super()</h3>
+            <div class="reflection-box">
+                <h4>📌 Usando super() en SubClases</h4>
+                <p>Cuando una subclase hereda de una superclase, DEBE llamar al constructor del padre usando <code>super()</code>:</p>
+                <ul>
+                    <li><code>super(parámetros);</code> debe ser la PRIMERA línea del constructor</li>
+                    <li>Inicializa los atributos heredados</li>
+                    <li>Si no lo escribes, Java lo hace automáticamente (si el padre tiene constructor sin parámetros)</li>
+                </ul>
+            </div>
+
+            <h3>Ejemplo Visual</h3>
+            <pre><code>// SuperClase
+public class Empleado {
+    protected String id;
+    protected String nombre;
+    
+    public Empleado(String id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+        System.out.println("Constructor de Empleado ejecutado");
+    }
+}
+
+// SubClase
+public class Ingeniero extends Empleado {
+    private String especialidad;
+    
+    public Ingeniero(String id, String nombre, String especialidad) {
+        super(id, nombre); // Llama al constructor del padre PRIMERO
+        this.especialidad = especialidad;
+        System.out.println("Constructor de Ingeniero ejecutado");
+    }
+}
+
+// Uso
+Ingeniero ing = new Ingeniero("001", "Juan", "Programación");
+
+// Salida en consola:
+// Constructor de Empleado ejecutado
+// Constructor de Ingeniero ejecutado</code></pre>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="parametros" class="case-study-section">
+            <div class="case-header">
+                <h2>5. Paso de Parámetros por Valor y by Referencia</h2>
+                <h3>Diferencias Clave en Java</h3>
+            </div>
+
+            <h3>Tipo 1: Paso por Valor (Tipos Primitivos)</h3>
+            <div class="definition-box">
+                <strong>Paso por Valor:</strong> Se copia el valor del dato. Los cambios dentro del método NO afectan el original. 
+                Aplica a: <code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code>, etc.
+            </div>
+
+            <pre><code>public class EjemploPasoValor {
+    public static void main(String[] args) {
+        int edad = 25;
+        System.out.println("Edad antes: " + edad); // 25
+        
+        aumentarEdad(edad); // Pasar por valor
+        
+        System.out.println("Edad después: " + edad); // Sigue siendo 25
+    }
+    
+    // Este método recibe una COPIA del valor
+    public static void aumentarEdad(int edad) {
+        edad = edad + 1; // Modifica la COPIA, no el original
+        System.out.println("Edad dentro del método: " + edad); // 26
+    }
+}
+
+// Salida:
+// Edad antes: 25
+// Edad dentro del método: 26
+// Edad después: 25  ← No cambió!</code></pre>
+
+            <h3>Tipo 2: Paso por Referencia (Objetos y Strings)</h3>
+            <div class="definition-box">
+                <strong>Paso por Referencia:</strong> Se pasa la dirección (referencia) del objeto, no una copia. 
+                Los cambios dentro del método SÍ afectan el original. Aplica a: <code>String</code>, clases, arrays, etc.
+            </div>
+
+            <pre><code>public class EjemploPasoReferencia {
+    public static void main(String[] args) {
+        Empleado emp = new Empleado("001", "Juan", 5000);
+        System.out.println("Nombre antes: " + emp.getNombre()); // Juan
+        
+        cambiarNombre(emp); // Pasar por referencia
+        
+        System.out.println("Nombre después: " + emp.getNombre()); // Carlos - ¡CAMBIÓ!
+    }
+    
+    // Este método recibe una REFERENCIA al objeto (no una copia)
+    public static void cambiarNombre(Empleado emp) {
+        emp.setNombre("Carlos"); // Modifica el OBJETO ORIGINAL
+        System.out.println("Nombre dentro del método: " + emp.getNombre()); // Carlos
+    }
+}
+
+// Salida:
+// Nombre antes: Juan
+// Nombre dentro del método: Carlos
+// Nombre después: Carlos  ← ¡SÍ CAMBIÓ!</code></pre>
+
+            <h3>Comparación Visual</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Paso por Valor</th>
+                            <th>Paso por Referencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tipos</strong></td>
+                            <td>int, double, boolean, char</td>
+                            <td>String, objetos, arrays</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Se copia</strong></td>
+                            <td>El valor completo</td>
+                            <td>La dirección de memoria</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cambios afectan</strong></td>
+                            <td>Solo a la copia local</td>
+                            <td>Al objeto original</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Eficiencia</strong></td>
+                            <td>Más lento (copia datos)</td>
+                            <td>Más rápido (copia referencia)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplo</strong></td>
+                            <td>int x = 10;</td>
+                            <td>Empleado emp = new Empleado(...);</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="reflection-box">
+                <h4>💡 Consejos Prácticos</h4>
+                <ul>
+                    <li>Usa <code>final</code> para evitar cambios accidentales: <code>final int edad = 25;</code></li>
+                    <li>Para objetos, crea métodos que devuelven parámetros modificados si es necesario</li>
+                    <li>Los Strings son especiales: parecen paso por referencia pero se comportan como valor</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="scanner" class="case-study-section">
+            <div class="case-header">
+                <h2>6. Scanner en Java - Entrada de Datos</h2>
+                <h3>Capturando Datos del Usuario en IntelliJ IDEA</h3>
+            </div>
+
+            <h3>¿Qué es Scanner?</h3>
+            <div class="definition-box">
+                <strong>Scanner:</strong> Clase de Java que permite leer datos del usuario desde la consola. 
+                Está en el paquete <code>java.util.Scanner</code>.
+            </div>
+
+            <h3>Importar Scanner</h3>
+            <pre><code>import java.util.Scanner; // Agregar esta línea al inicio del archivo</code></pre>
+
+            <h3>Syntax Básico</h3>
+            <pre><code>// Crear un objeto Scanner
+Scanner sc = new Scanner(System.in);
+
+// Leer diferentes tipos de datos
+String nombre = sc.nextLine();      // Lee una línea completa (con espacios)
+int numero = sc.nextInt();          // Lee un número entero
+double decimal = sc.nextDouble();   // Lee un número con decimales
+boolean boleano = sc.nextBoolean(); // Lee true o false
+String palabra = sc.next();         // Lee una palabra (hasta espacio)
+
+// IMPORTANTE: Cerrar Scanner cuando termines
+sc.close();</code></pre>
+
+            <h3>Ejemplo Completo: Leer Datos del Usuario</h3>
+            <pre><code>import java.util.Scanner;
+
+public class LecturaDatos {
+    public static void main(String[] args) {
+        // Crear un Scanner
+        Scanner sc = new Scanner(System.in);
+        
+        // Pedir datos al usuario
+        System.out.print("¿Cuál es tu nombre? ");
+        String nombre = sc.nextLine(); // Lee la línea completa
+        
+        System.out.print("¿Cuántos años tienes? ");
+        int edad = sc.nextInt(); // Lee un número entero
+        
+        System.out.print("¿Cuál es tu salario? ");
+        double salario = sc.nextDouble(); // Lee un número con decimales
+        
+        // Mostrar los datos
+        System.out.println("\n═══ DATOS INGRESADOS ═══");
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Edad: " + edad);
+        System.out.printf("Salario: $%.2f%n", salario);
+        
+        // Cerrar Scanner
+        sc.close();
+    }
+}</code></pre>
+
+            <h3>⚠️ Problema Común: nextInt() + nextLine()</h3>
+            <div class="warning-box">
+                <h4>El Problema</h4>
+                <p>Después de usar <code>nextInt()</code>, <code>nextLine()</code> puede saltarse o no funcionar correctamente.</p>
+                <h4>La Solución</h4>
+                <pre><code>Scanner sc = new Scanner(System.in);
+
+System.out.print("Ingresa tu edad: ");
+int edad = sc.nextInt();
+
+sc.nextLine(); // ← IMPORTANTE: Limpiar el buffer
+
+System.out.print("Ingresa tu nombre: ");
+String nombre = sc.nextLine(); // Ahora funciona correctamente
+
+sc.close();</code></pre>
+            </div>
+
+            <h3>Métodos Comunes de Scanner</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Qué Lee</th>
+                            <th>Tipo</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>nextLine()</code></td>
+                            <td>Una línea completa (con espacios)</td>
+                            <td>String</td>
+                            <td>"Juan García López"</td>
+                        </tr>
+                        <tr>
+                            <td><code>next()</code></td>
+                            <td>Una palabra (hasta espacio)</td>
+                            <td>String</td>
+                            <td>"Juan"</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextInt()</code></td>
+                            <td>Un número entero</td>
+                            <td>int</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextDouble()</code></td>
+                            <td>Un número decimal</td>
+                            <td>double</td>
+                            <td>5000.50</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextBoolean()</code></td>
+                            <td>true o false</td>
+                            <td>boolean</td>
+                            <td>true</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ Buenas Prácticas</h4>
+                <ul>
+                    <li>Siempre usa <code>nextLine()</code> para leer nombres (que pueden tener espacios)</li>
+                    <li>Usa <code>sc.nextLine();</code> después de números para limpiar el buffer</li>
+                    <li>Valida los datos ingresados (que no estén vacíos, etc.)</li>
+                    <li>Cierra el Scanner con <code>sc.close();</code> al final</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="desarrollo" class="case-study-section">
+            <div class="case-header">
+                <h2>7. Desarrollo Completo: Sistema de Registro de Empleados</h2>
+                <h3>Paso a Paso - Proyecto Final</h3>
+            </div>
+
+            <p>
+                Ahora crearás la clase principal <code>Main</code> que usa todas las clases y permite registrar empleados 
+                usando Scanner.
+            </p>
+
+            <h3>Paso 1: Crear la Clase Main</h3>
+            <div class="step-box">
+                <h4><span class="step-num">1</span>Crear clase Main</h4>
+                <p>Haz clic derecho en el paquete → <strong>"New"</strong> → <strong>"Java Class"</strong></p>
+                <p>Llámala: <code>Main</code></p>
+            </div>
+
+            <h3>Código Completo de Main.java</h3>
+            <pre><code>package com.techsolutions.empresa;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+    
+    // Lista para almacenar todos los empleados
+    static ArrayList&lt;Empleado&gt; empleados = new ArrayList&lt;&gt;();
+    
+    // Scanner para leer datos del usuario
+    static Scanner sc = new Scanner(System.in);
+    
+    public static void main(String[] args) {
+        System.out.println("╔═══════════════════════════════════════════════════╗");
+        System.out.println("║          BIENVENIDO A TECHSOLUTIONS             ║");
+        System.out.println("║        Sistema de Gestión de Empleados           ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
+        
+        boolean salir = false;
+        
+        while (!salir) {
+            mostrarMenu();
+            System.out.print("\nSelecciona una opción: ");
+            int opcion = sc.nextInt();
+            sc.nextLine(); // Limpiar buffer
+            
+            switch (opcion) {
+                case 1:
+                    registrarIngeniero();
+                    break;
+                case 2:
+                    registrarContador();
+                    break;
+                case 3:
+                    registrarVendedor();
+                    break;
+                case 4:
+                    mostrarTodosEmpleados();
+                    break;
+                case 5:
+                    buscarEmpleado();
+                    break;
+                case 6:
+                    System.out.println("\n¡Hasta luego!");
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("❌ Opción inválida");
+            }
+        }
+        
+        sc.close();
+    }
+    
+    // Mostrar menú
+    static void mostrarMenu() {
+        System.out.println("\n┌─────────────────────────────────────┐");
+        System.out.println("│            MENÚ PRINCIPAL           │");
+        System.out.println("├─────────────────────────────────────┤");
+        System.out.println("│ 1) Registrar Ingeniero              │");
+        System.out.println("│ 2) Registrar Contador               │");
+        System.out.println("│ 3) Registrar Vendedor               │");
+        System.out.println("│ 4) Mostrar Todos los Empleados      │");
+        System.out.println("│ 5) Buscar Empleado por ID           │");
+        System.out.println("│ 6) Salir                            │");
+        System.out.println("└─────────────────────────────────────┘");
+    }
+    
+    // Registrar Ingeniero
+    static void registrarIngeniero() {
+        System.out.println("\n════════════════════════════════════");
+        System.out.println("📝 REGISTRAR NUEVO INGENIERO");
+        System.out.println("════════════════════════════════════");
+        
+        System.out.print("ID del empleado: ");
+        String id = sc.nextLine();
+        
+        System.out.print("Nombre completo: ");
+        String nombre = sc.nextLine();
+        
+        System.out.print("Salario base: $");
+        double salario = sc.nextDouble();
+        sc.nextLine(); // Limpiar buffer
+        
+        System.out.print("Especialidad (ej: Programación, DevOps): ");
+        String especialidad = sc.nextLine();
+        
+        System.out.print("Años de experiencia: ");
+        int experiencia = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.print("Lenguajes principales (ej: Java, Python, C++): ");
+        String lenguajes = sc.nextLine();
+        
+        // Crear el ingeniero usando el constructor
+        Ingeniero ing = new Ingeniero(id, nombre, salario, especialidad, experiencia, lenguajes);
+        
+        // Agregar a la lista
+        empleados.add(ing);
+        
+        System.out.println("\n✅ Ingeniero registrado exitosamente");
+    }
+    
+    // Registrar Contador
+    static void registrarContador() {
+        System.out.println("\n════════════════════════════════════");
+        System.out.println("📝 REGISTRAR NUEVO CONTADOR");
+        System.out.println("════════════════════════════════════");
+        
+        System.out.print("ID del empleado: ");
+        String id = sc.nextLine();
+        
+        System.out.print("Nombre completo: ");
+        String nombre = sc.nextLine();
+        
+        System.out.print("Salario base: $");
+        double salario = sc.nextDouble();
+        sc.nextLine();
+        
+        System.out.print("Cantidad de clientes a cargo: ");
+        int clientes = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.print("Tipo de certificación (ej: CPA, Contador Público): ");
+        String certificacion = sc.nextLine();
+        
+        System.out.print("Auditorías realizadas: ");
+        int auditorias = sc.nextInt();
+        sc.nextLine();
+        
+        // Crear el contador
+        Contador contador = new Contador(id, nombre, salario, clientes, certificacion, auditorias);
+        
+        // Agregar a la lista
+        empleados.add(contador);
+        
+        System.out.println("\n✅ Contador registrado exitosamente");
+    }
+    
+    // Registrar Vendedor
+    static void registrarVendedor() {
+        System.out.println("\n════════════════════════════════════");
+        System.out.println("📝 REGISTRAR NUEVO VENDEDOR");
+        System.out.println("════════════════════════════════════");
+        
+        System.out.print("ID del empleado: ");
+        String id = sc.nextLine();
+        
+        System.out.print("Nombre completo: ");
+        String nombre = sc.nextLine();
+        
+        System.out.print("Salario base: $");
+        double salario = sc.nextDouble();
+        sc.nextLine();
+        
+        System.out.print("Zona de ventas (ej: Centro, Sur, Norte): ");
+        String zona = sc.nextLine();
+        
+        System.out.print("Porcentaje de comisión (%): ");
+        double comision = sc.nextDouble();
+        sc.nextLine();
+        
+        System.out.print("Meta mensual: $");
+        double meta = sc.nextDouble();
+        sc.nextLine();
+        
+        // Crear el vendedor
+        Vendedor vendedor = new Vendedor(id, nombre, salario, zona, comision, meta);
+        
+        // Agregar a la lista
+        empleados.add(vendedor);
+        
+        System.out.println("\n✅ Vendedor registrado exitosamente");
+    }
+    
+    // Mostrar todos los empleados
+    static void mostrarTodosEmpleados() {
+        if (empleados.isEmpty()) {
+            System.out.println("\n❌ No hay empleados registrados");
+            return;
+        }
+        
+        System.out.println("\n════════════════════════════════════");
+        System.out.println("📋 LISTADO DE TODOS LOS EMPLEADOS");
+        System.out.println("════════════════════════════════════");
+        
+        for (int i = 0; i &lt; empleados.size(); i++) {
+            System.out.println("\n[Empleado " + (i + 1) + "]");
+            empleados.get(i).mostrarInfo();
+        }
+    }
+    
+    // Buscar empleado por ID
+    static void buscarEmpleado() {
+        System.out.print("\nIngresa el ID del empleado a buscar: ");
+        String idBuscado = sc.nextLine();
+        
+        boolean encontrado = false;
+        
+        for (Empleado emp : empleados) {
+            if (emp.getId().equals(idBuscado)) {
+                System.out.println();
+                emp.mostrarInfo();
+                encontrado = true;
+                break;
+            }
+        }
+        
+        if (!encontrado) {
+            System.out.println("\n❌ Empleado con ID '" + idBuscado + "' no encontrado");
+        }
+    }
+}</code></pre>
+
+            <h3>Paso 2: Ejecutar el Programa</h3>
+            <div class="step-box">
+                <h4><span class="step-num">2</span>Ejecutar Main</h4>
+                <p>Haz clic en el botón "Run" (▶) arriba, o presiona <code>Shift + F10</code>.</p>
+                <p>Debería aparecer el menú en la consola.</p>
+            </div>
+
+            <h3>Paso 3: Probar el Sistema</h3>
+            <div class="step-box">
+                <h4><span class="step-num">3</span>Prueba cada opción</h4>
+                <p>Ingresa datos para registrar un empleado de cada tipo.</p>
+                <p>Luego visualiza todos los empleados y busca por ID.</p>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ ¡Sistema Completado!</h4>
+                <p>Has creado un sistema funcional con:</p>
+                <ul>
+                    <li>✓ Superclase (Empleado)</li>
+                    <li>✓ 3 Subclases con herencia</li>
+                    <li>✓ Constructores con parámetros</li>
+                    <li>✓ Paso de parámetros (valor y referencia)</li>
+                    <li>✓ Scanner para entrada de datos</li>
+                    <li>✓ ArrayList para almacenar objetos</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="desafios">
+            <h2>8. Desafíos Adicionales</h2>
+            <p>Amplía tu conocimiento con estos desafíos:</p>
+
+            <h3>Desafío 1: Agregar Método toString()</h3>
+            <div class="scenario-box">
+                <h4>Objetivo</h4>
+                <p>Sobrescribe el método <code>toString()</code> en cada clase para que retorne información en formato texto.</p>
+                <pre><code>@Override
+public String toString() {
+    return "Ingeniero{" +
+            "id='" + id + '\'' +
+            ", nombre='" + nombre + '\'' +
+            ", salarioBase=" + salarioBase +
+            ", especialidad='" + especialidad + '\'' +
+            '}';
+}</code></pre>
+            </div>
+
+            <h3>Desafío 2: Calcular Nómina Total</h3>
+            <div class="scenario-box">
+                <h4>Objetivo</h4>
+                <p>Crea un método en Main que calcule la nómina total de todos los empleados.</p>
+                <pre><code>static void calcularNominaTotal() {
+    double total = 0;
+    for (Empleado emp : empleados) {
+        total += emp.calcularSalario();
+    }
+    System.out.printf("Nómina Total: $%.2f%n", total);
+}</code></pre>
+            </div>
+
+            <h3>Desafío 3: Manejo de Excepciones</h3>
+            <div class="scenario-box">
+                <h4>Objetivo</h4>
+                <p>Agrega try-catch para manejar entradas inválidas del usuario.</p>
+                <pre><code>try {
+    int edad = sc.nextInt();
+    if (edad &lt; 0) {
+        throw new Exception("La edad no puede ser negativa");
+    }
+} catch (Exception e) {
+    System.out.println("Error: " + e.getMessage());
+}</code></pre>
+            </div>
+
+            <div class="reflection-box">
+                <h4>🎯 Próximos Pasos</h4>
+                <ul>
+                    <li>Intenta guardar los datos en un archivo (File I/O)</li>
+                    <li>Implementa interfaces para definir contratos</li>
+                    <li>Crea clases abstractas para forzar herencia</li>
+                    <li>Estudia colecciones más avanzadas (HashMap, Set)</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <h3>Herencia, Constructores y Scanner en Java - Ingeniería de Sistemas</h3>
+            <p><strong>Creado por:</strong> Ing. Julian Quimbayo Castro</p>
+            <p>Última actualización: Febrero 2026</p>
+            <p>Sistema de Gestión de Empleados - Proyecto Educativo</p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">© Corporación Universitaria de Huila - Corhuila</p>
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" title="Volver arriba">↑</button>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    setupScrollButton();
+    setupNavigation();
+    setupSmoothScroll();
+    highlightActiveSection();
+});
+
+function setupScrollButton() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', function() {
+        if (document.documentElement.scrollTop > 300 || document.body.scrollTop > 300) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+
+    scrollBtn.addEventListener('click', function() {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    });
+}
+
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    window.addEventListener('scroll', highlightActiveSection);
+}
+
+function highlightActiveSection() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    let current = '';
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+document.querySelectorAll('pre').forEach(pre => {
+    const button = document.createElement('button');
+    button.textContent = '📋 Copiar';
+    button.style.cssText = `
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        padding: 8px 12px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 10;
+    `;
+
+    pre.style.position = 'relative';
+    pre.appendChild(button);
+
+    pre.addEventListener('mouseenter', () => {
+        button.style.opacity = '1';
+    });
+
+    pre.addEventListener('mouseleave', () => {
+        button.style.opacity = '0';
+    });
+
+    button.addEventListener('click', () => {
+        const code = pre.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = button.textContent;
+            button.textContent = '✅ Copiado!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        });
+    });
+});
+    </script>
+</body>
+</html>
