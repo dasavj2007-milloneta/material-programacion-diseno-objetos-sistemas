@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto — Diagramación de Clases y SOLID | Ingeniería de Sistemas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 5px 0;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    padding: 50px 0;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 2em;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Divider */
+.divider {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 40px 0;
+}
+
+.divider-thick {
+    border: none;
+    border-top: 3px solid var(--accent-color);
+    margin: 50px 0;
+}
+
+/* Definition Box */
+.definition-box {
+    background-color: #e8f4f8;
+    border-left: 5px solid var(--secondary-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.05em;
+}
+
+/* Reflection Box */
+.reflection-box {
+    background-color: #fff3cd;
+    border-left: 5px solid var(--warning-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.reflection-box h4 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.reflection-box p {
+    color: #856404;
+    line-height: 1.7;
+}
+
+.reflection-box ul {
+    margin-left: 20px;
+    color: #856404;
+}
+
+/* Info Box */
+.info-box {
+    background-color: #d1ecf1;
+    border-left: 5px solid var(--info-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.info-box h4 {
+    color: #0c5460;
+    margin-bottom: 10px;
+}
+
+.info-box p, .info-box li {
+    color: #0c5460;
+    line-height: 1.7;
+}
+
+/* Success Box */
+.success-box {
+    background-color: #d4edda;
+    border-left: 5px solid var(--success-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.success-box h4 {
+    color: #155724;
+    margin-bottom: 10px;
+}
+
+.success-box p, .success-box li {
+    color: #155724;
+    line-height: 1.7;
+}
+
+/* Danger Box */
+.danger-box {
+    background-color: #f8d7da;
+    border-left: 5px solid var(--accent-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.danger-box h4 {
+    color: #721c24;
+    margin-bottom: 10px;
+}
+
+.danger-box p, .danger-box li {
+    color: #721c24;
+    line-height: 1.7;
+}
+
+/* Comparison Cards */
+.comparison-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h3,
+.card h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+    margin: 30px 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table thead tr {
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: left;
+    font-weight: 500;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.styled-table tbody tr:hover {
+    background-color: var(--light-bg);
+}
+
+.styled-table tbody tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+/* Code Blocks */
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--primary-color);
+}
+
+pre code {
+    background-color: transparent;
+    color: #f8f8f2;
+    padding: 0;
+}
+
+/* Diagram Box */
+.diagram-box {
+    background-color: #f0f8ff;
+    border: 2px solid var(--info-color);
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
+}
+
+.diagram-box pre {
+    background-color: transparent;
+    color: var(--dark-text);
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+/* Case Study Section */
+.case-study-section {
+    background-color: var(--light-bg);
+    padding: 40px;
+    border-radius: 10px;
+    margin: 40px 0;
+}
+
+.case-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.case-header h2 {
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.case-header h3 {
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+.scenario-box {
+    background: white;
+    border-left: 4px solid var(--accent-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.scenario-box h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Project Cards */
+.project-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 25px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--secondary-color);
+}
+
+.project-card.accent {
+    border-top-color: var(--accent-color);
+}
+
+.project-card.success {
+    border-top-color: var(--success-color);
+}
+
+.project-card.warning {
+    border-top-color: var(--warning-color);
+}
+
+.project-card.info {
+    border-top-color: var(--info-color);
+}
+
+.project-card h3 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-card .group-badge {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.project-card .members {
+    background-color: var(--light-bg);
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 0.95em;
+}
+
+.project-card .members strong {
+    color: var(--secondary-color);
+}
+
+.project-card .entity-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.project-card .entity-tag {
+    background-color: #e8f4f8;
+    color: var(--secondary-color);
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.project-card .solid-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.project-card .solid-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: white;
+}
+
+.solid-tag.srp { background-color: #e74c3c; }
+.solid-tag.ocp { background-color: #e67e22; }
+.solid-tag.lsp { background-color: #f1c40f; color: #333; }
+.solid-tag.isp { background-color: #2ecc71; }
+.solid-tag.dip { background-color: #3498db; }
+
+/* Footer */
+.main-footer {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+.main-footer p {
+    margin: 8px 0;
+    font-size: 0.95em;
+}
+
+.main-footer a {
+    color: #fff9e6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-footer a:hover {
+    color: var(--accent-color);
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    transition: background-color 0.3s;
+}
+
+#scrollTopBtn:hover {
+    background-color: var(--accent-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 15px 0;
+    margin-left: 30px;
+}
+
+li {
+    margin: 8px 0;
+    line-height: 1.7;
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 1.8em; }
+    h2 { font-size: 1.5em; }
+    .hero-section { padding: 40px 20px; }
+    .main-nav ul { flex-direction: column; }
+    .main-nav a { padding: 10px 15px; font-size: 13px; }
+    .comparison-cards { grid-template-columns: 1fr; }
+    .case-study-section { padding: 20px; }
+    .project-card { padding: 15px; }
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container brand-container">
+                <img src="https://raw.githubusercontent.com/code-corhuila/material-mineria-datos/b3725d694125ab35294ddfe415a327bc1445d32c/01-week/01-session/LOGO%20CORHUILA%20BLANCO%20PNG%20(2).png" alt="Logo Corhuila" class="logo-corhuila" style="max-width: 120px; height: auto; margin-bottom: 15px;">
+                <h1 class="brand-name" style="color: white;">Proyecto — Diagramación de Clases y Principios SOLID</h1>
+                <p style="color: white;">Programación y Diseño Orientado a Objetos — Ingeniería de Sistemas</p>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#descripcion">Descripción</a></li>
+                    <li><a href="#objetivos">Objetivos</a></li>
+                    <li><a href="#solid">Principios SOLID</a></li>
+                    <li><a href="#entregables">Entregables</a></li>
+                    <li><a href="#rubrica">Rúbrica</a></li>
+                    <li><a href="#asignaciones">Asignaciones</a></li>
+                    <li><a href="#cronograma">Cronograma</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container main-content">
+
+        <!-- ==================== SECCIÓN 1: DESCRIPCIÓN ==================== -->
+        <section id="descripcion" class="hero-section">
+            <h1>Proyecto de Diagramación de Clases y Desarrollo OO con SOLID</h1>
+            <p class="lead">Cada grupo diseñará el diagrama de clases UML de un sistema real y lo implementará en Java aplicando los cinco principios SOLID. El proyecto integra modelado, diseño y buenas prácticas de ingeniería de software.</p>
+        </section>
+
+        <hr class="divider">
+
+        <!-- ==================== SECCIÓN 2: OBJETIVOS ==================== -->
+        <section id="objetivos">
+            <h2>1. Objetivos del Proyecto</h2>
+
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>📐 Modelado UML</h4>
+                    <p>Diseñar un diagrama de clases completo con atributos, métodos, visibilidad, relaciones y multiplicidad correctamente representados.</p>
+                </div>
+                <div class="card">
+                    <h4>🏗️ Principios SOLID</h4>
+                    <p>Aplicar los cinco principios SOLID en el diseño e implementación del sistema, justificando cada decisión de diseño.</p>
+                </div>
+                <div class="card">
+                    <h4>💻 Implementación OO</h4>
+                    <p>Traducir el diagrama de clases a código funcional aplicando herencia, polimorfismo, composición, interfaces y encapsulamiento.</p>
+                </div>
+                <div class="card">
+                    <h4>📄 Documentación</h4>
+                    <p>Crear documentación técnica que relacione cada principio SOLID con decisiones concretas del diseño y la implementación.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 3: PRINCIPIOS SOLID ==================== -->
+        <section id="solid" class="case-study-section">
+            <div class="case-header">
+                <h2>2. Principios SOLID a Aplicar</h2>
+                <h3>Cada proyecto debe demostrar los cinco principios</h3>
+            </div>
+
+            <div class="comparison-cards">
+                <div class="card" style="border-top: 4px solid #e74c3c;">
+                    <h4>🔴 S — Single Responsibility</h4>
+                    <p><strong>Cada clase debe tener una única razón para cambiar.</strong></p>
+                    <p>Separar responsabilidades en clases distintas. Ejemplo: no mezclar lógica de negocio con persistencia de datos.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #e67e22;">
+                    <h4>🟠 O — Open/Closed</h4>
+                    <p><strong>Las entidades deben estar abiertas para extensión pero cerradas para modificación.</strong></p>
+                    <p>Usar herencia o interfaces para agregar funcionalidad sin modificar el código existente.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #f1c40f;">
+                    <h4>🟡 L — Liskov Substitution</h4>
+                    <p><strong>Los objetos de una subclase deben poder sustituir a los de la superclase sin alterar el comportamiento.</strong></p>
+                    <p>Las clases hijas deben respetar el contrato de la clase padre.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #2ecc71;">
+                    <h4>🟢 I — Interface Segregation</h4>
+                    <p><strong>Es mejor tener interfaces pequeñas y específicas que una interfaz grande y general.</strong></p>
+                    <p>Dividir interfaces grandes en varias más cohesivas.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid #3498db;">
+                    <h4>🔵 D — Dependency Inversion</h4>
+                    <p><strong>Depender de abstracciones, no de implementaciones concretas.</strong></p>
+                    <p>Usar interfaces o clases abstractas para desacoplar módulos de alto y bajo nivel.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📌 Requisito Obligatorio</h4>
+                <p>En la documentación del proyecto, cada grupo debe incluir una sección titulada <strong>"Aplicación de Principios SOLID"</strong> donde se explique, con fragmentos de código y referencia al diagrama UML, cómo se aplicó cada principio.</p>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 4: ENTREGABLES ==================== -->
+        <section id="entregables">
+            <h2>3. Entregables del Proyecto</h2>
+
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>📊 Entregable 1 — Diagrama de Clases UML</h4>
+                    <ul>
+                        <li>Mínimo <strong>6 clases</strong> con atributos, métodos y visibilidad</li>
+                        <li>Al menos <strong>3 tipos de relación</strong> (herencia, composición, agregación, asociación o dependencia)</li>
+                        <li>Multiplicidad correctamente indicada en todas las relaciones</li>
+                        <li>Al menos <strong>1 clase abstracta</strong> y <strong>2 interfaces</strong></li>
+                        <li>Herramienta: <a href="https://www.drawio.com/" target="_blank">draw.io</a>, <a href="https://www.lucidchart.com/" target="_blank">Lucidchart</a>, <a href="https://staruml.io/" target="_blank">StarUML</a> o similar</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💻 Entregable 2 — Implementación en Código</h4>
+                    <ul>
+                        <li>Implementación en <strong>Java</strong></li>
+                        <li>Código que refleje fielmente el diagrama de clases</li>
+                        <li>Aplicación demostrable de los <strong>5 principios SOLID</strong></li>
+                        <li>Clase <code>Main</code> que demuestre el funcionamiento</li>
+                        <li>Repositorio en GitHub con commits descriptivos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📝 Entregable 3 — Documentación Técnica</h4>
+                    <ul>
+                        <li>Descripción del sistema y su contexto</li>
+                        <li>Diagrama de clases UML exportado en imagen</li>
+                        <li>Explicación de cada relación y su justificación</li>
+                        <li>Sección <strong>"Aplicación de Principios SOLID"</strong> con código de ejemplo</li>
+                        <li>Conclusiones y lecciones aprendidas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="reflection-box">
+                <h4>⚠️ Formato de Entrega</h4>
+                <ul>
+                    <li><strong>Repositorio GitHub:</strong> Nombre del repo <code>[nombre-proyecto]-grupo-[N]</code></li>
+                    <li><strong>README.md:</strong> Debe contener la documentación técnica completa</li>
+                    <li><strong>Carpeta <code>/diagrams</code>:</strong> Imágenes del diagrama UML (.png o .svg)</li>
+                    <li><strong>Carpeta <code>/src</code>:</strong> Código fuente organizado por paquetes</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 5: RÚBRICA ==================== -->
+        <section id="rubrica">
+            <h2>4. Rúbrica de Evaluación</h2>
+
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Criterio</th>
+                            <th>Excelente (5.0)</th>
+                            <th>Bueno (4.0)</th>
+                            <th>Aceptable (3.0)</th>
+                            <th>Deficiente (&lt; 3.0)</th>
+                            <th>Peso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Diagrama de Clases UML</strong></td>
+                            <td>≥ 6 clases, relaciones correctas, multiplicidad, clase abstracta e interfaces. Notación UML impecable.</td>
+                            <td>5-6 clases, mayoría de relaciones correctas, pequeños errores de notación.</td>
+                            <td>4-5 clases, relaciones incompletas, errores de multiplicidad.</td>
+                            <td>Menos de 4 clases, relaciones incorrectas o ausentes.</td>
+                            <td><strong>25%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Principios SOLID</strong></td>
+                            <td>Los 5 principios aplicados y justificados con código. Diseño evidencia comprensión profunda.</td>
+                            <td>4 principios aplicados correctamente, justificación parcial.</td>
+                            <td>3 principios aplicados, justificación superficial.</td>
+                            <td>Menos de 3 principios o aplicación incorrecta.</td>
+                            <td><strong>30%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Implementación OO</strong></td>
+                            <td>Código funcional, bien estructurado, herencia/polimorfismo/interfaces correctos. Compilación sin errores.</td>
+                            <td>Código funcional con pequeñas inconsistencias frente al diagrama.</td>
+                            <td>Código parcialmente funcional, falta implementar algunas clases.</td>
+                            <td>Código no compila o no refleja el diagrama.</td>
+                            <td><strong>25%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentación</strong></td>
+                            <td>README completo, diagramas exportados, relación SOLID-código clara, conclusiones reflexivas.</td>
+                            <td>Documentación completa pero sin profundidad en SOLID.</td>
+                            <td>Documentación parcial, falta sección SOLID o diagramas.</td>
+                            <td>Documentación ausente o incompleta.</td>
+                            <td><strong>10%</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sustentación</strong></td>
+                            <td>Ambos integrantes explican con claridad el diseño, código y principios aplicados.</td>
+                            <td>Se explica correctamente pero con dudas puntuales.</td>
+                            <td>Solo un integrante puede explicar el proyecto.</td>
+                            <td>No se puede sustentar el proyecto.</td>
+                            <td><strong>10%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="danger-box">
+                <h4>🚨 Nota Importante</h4>
+                <p>Proyectos con código copiado de internet sin adaptación ni comprensión demostrable recibirán nota de <strong>0.0</strong>. Se verificará la originalidad del diseño y la capacidad de sustentación de cada integrante.</p>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 6: ASIGNACIONES ==================== -->
+        <section id="asignaciones" class="case-study-section">
+            <div class="case-header">
+                <h2>5. Asignación de Proyectos por Grupo</h2>
+                <h3>Cada grupo tiene un proyecto único — Todos los proyectos son diferentes</h3>
+            </div>
+
+            <!-- GRUPO 1 -->
+            <div class="project-card">
+                <h3><span class="group-badge">Grupo 1</span> Sistema de Gestión de Biblioteca Digital</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> KENETH ENRIQUE CARDENAS TOLEDO (<a href="mailto:kecardenas-2025a@corhuila.edu.co">kecardenas-2025a@corhuila.edu.co</a>), LUIS FERNANDO MASMELA TOVAR (<a href="mailto:lfmasmela-2025a@corhuila.edu.co">lfmasmela-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para gestionar el catálogo de una biblioteca digital: libros, revistas, audiolibros. Permite préstamos digitales, reservas, gestión de usuarios con distintos roles y notificaciones de vencimiento.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">RecursoDigital (abstracta)</span>
+                    <span class="entity-tag">Libro</span>
+                    <span class="entity-tag">Revista</span>
+                    <span class="entity-tag">Audiolibro</span>
+                    <span class="entity-tag">Usuario</span>
+                    <span class="entity-tag">Prestamo</span>
+                    <span class="entity-tag">Reserva</span>
+                    <span class="entity-tag">Notificacion</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar lógica de préstamo, notificación y catálogo</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de recursos sin modificar código existente</span>
+                    <span class="solid-tag lsp">LSP: Subclases de RecursoDigital intercambiables</span>
+                    <span class="solid-tag isp">ISP: Interfaces Prestable, Descargable, Reproducible</span>
+                    <span class="solid-tag dip">DIP: Servicio de notificación con abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 2 -->
+            <div class="project-card accent">
+                <h3><span class="group-badge">Grupo 2</span> Sistema de Gestión de Restaurante</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> OSCAR FERNANDO BECERRA LANCHEROS (<a href="mailto:osfebecerra-2025a@corhuila.edu.co">osfebecerra-2025a@corhuila.edu.co</a>), LOREN DAYANA ORREGO BOTERO (<a href="mailto:lodorrego-2025a@corhuila.edu.co">lodorrego-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar un restaurante: carta de menú con categorías, registro de pedidos por mesa, seguimiento del estado de preparación en cocina, facturación y gestión de meseros.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">ElementoMenu (abstracta)</span>
+                    <span class="entity-tag">Plato</span>
+                    <span class="entity-tag">Bebida</span>
+                    <span class="entity-tag">Postre</span>
+                    <span class="entity-tag">Pedido</span>
+                    <span class="entity-tag">Mesa</span>
+                    <span class="entity-tag">Empleado</span>
+                    <span class="entity-tag">Factura</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar gestión de menú, pedidos y facturación</span>
+                    <span class="solid-tag ocp">OCP: Nuevas categorías de menú sin modificar lógica</span>
+                    <span class="solid-tag lsp">LSP: Subclases de ElementoMenu sustituibles</span>
+                    <span class="solid-tag isp">ISP: Interfaces Preparable, Facturable, Servible</span>
+                    <span class="solid-tag dip">DIP: Calculador de precios con abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 3 -->
+            <div class="project-card success">
+                <h3><span class="group-badge">Grupo 3</span> Sistema de Gestión de Hospital</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> SERGIO ALEJANDRO BENAVIDES MEDINA (<a href="mailto:sabenavides-2025a@corhuila.edu.co">sabenavides-2025a@corhuila.edu.co</a>), HECTOR FABIAN ROJAS RUIZ (<a href="mailto:hfrojas-2025a@corhuila.edu.co">hfrojas-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para gestionar pacientes, médicos, citas médicas, historiales clínicos y recetas. Incluye especialidades médicas, consultorios y control de horarios de atención.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Persona (abstracta)</span>
+                    <span class="entity-tag">Paciente</span>
+                    <span class="entity-tag">Medico</span>
+                    <span class="entity-tag">Especialidad</span>
+                    <span class="entity-tag">Cita</span>
+                    <span class="entity-tag">HistorialClinico</span>
+                    <span class="entity-tag">Receta</span>
+                    <span class="entity-tag">Consultorio</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar gestión de citas, historial y recetas</span>
+                    <span class="solid-tag ocp">OCP: Nuevas especialidades sin modificar Medico</span>
+                    <span class="solid-tag lsp">LSP: Paciente y Medico sustituibles como Persona</span>
+                    <span class="solid-tag isp">ISP: Interfaces Agendable, Diagnosticable, Recetable</span>
+                    <span class="solid-tag dip">DIP: Servicio de citas depende de abstracción de notificación</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 4 -->
+            <div class="project-card warning">
+                <h3><span class="group-badge">Grupo 4</span> Sistema de Gestión de Tienda de Videojuegos</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> DANIEL ALEXANDER PAREJA MONTERO (<a href="mailto:dapareja-2025a@corhuila.edu.co">dapareja-2025a@corhuila.edu.co</a>), ALEX STIVEN URIBE REY (<a href="mailto:asuribe-2025a@corhuila.edu.co">asuribe-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Plataforma de venta y alquiler de videojuegos digitales y físicos. Gestión de catálogo por plataforma y género, carrito de compras, membresías premium y sistema de reseñas.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Producto (abstracta)</span>
+                    <span class="entity-tag">VideojuegoDigital</span>
+                    <span class="entity-tag">VideojuegoFisico</span>
+                    <span class="entity-tag">Cliente</span>
+                    <span class="entity-tag">Membresia</span>
+                    <span class="entity-tag">Pedido</span>
+                    <span class="entity-tag">Resena</span>
+                    <span class="entity-tag">Plataforma</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar catálogo, ventas, membresías y reseñas</span>
+                    <span class="solid-tag ocp">OCP: Nuevas plataformas sin modificar el catálogo</span>
+                    <span class="solid-tag lsp">LSP: Digital y Físico sustituibles como Producto</span>
+                    <span class="solid-tag isp">ISP: Interfaces Comprable, Alquilable, Resenable</span>
+                    <span class="solid-tag dip">DIP: Procesador de pagos con abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 5 -->
+            <div class="project-card info">
+                <h3><span class="group-badge">Grupo 5</span> Sistema de Gestión de Gimnasio</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> GIOVANNY ANDREY PUENTES ALAPE (<a href="mailto:ganpuentes-2025a@corhuila.edu.co">ganpuentes-2025a@corhuila.edu.co</a>), MELANNIE LIZETH SANCHEZ POLANIA (<a href="mailto:mlsanchez-2025a@corhuila.edu.co">mlsanchez-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar un gimnasio: membresías, rutinas de entrenamiento personalizadas, clases grupales, seguimiento de progreso físico del cliente y gestión de entrenadores.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Persona (abstracta)</span>
+                    <span class="entity-tag">Cliente</span>
+                    <span class="entity-tag">Entrenador</span>
+                    <span class="entity-tag">Membresia</span>
+                    <span class="entity-tag">Rutina</span>
+                    <span class="entity-tag">Ejercicio</span>
+                    <span class="entity-tag">ClaseGrupal</span>
+                    <span class="entity-tag">SeguimientoProgreso</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar membresías, rutinas y seguimiento</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de membresía sin modificar lógica</span>
+                    <span class="solid-tag lsp">LSP: Cliente y Entrenador sustituibles como Persona</span>
+                    <span class="solid-tag isp">ISP: Interfaces Entrenable, Agendable, Medible</span>
+                    <span class="solid-tag dip">DIP: Generador de rutinas depende de abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 6 -->
+            <div class="project-card">
+                <h3><span class="group-badge">Grupo 6</span> Sistema de Gestión de Hotel</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> JUAN SEBASTIAN URUEÑA TORRES (<a href="mailto:juseuruena-2025a@corhuila.edu.co">juseuruena-2025a@corhuila.edu.co</a>), DAVID SANTIAGO VARGAS JIMENEZ (<a href="mailto:dasavargas-2025a@corhuila.edu.co">dasavargas-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar un hotel: tipos de habitación, reservas, check-in/check-out, servicios adicionales (spa, restaurante, lavandería), facturación y gestión de huéspedes.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Habitacion (abstracta)</span>
+                    <span class="entity-tag">HabitacionSimple</span>
+                    <span class="entity-tag">HabitacionSuite</span>
+                    <span class="entity-tag">Huesped</span>
+                    <span class="entity-tag">Reserva</span>
+                    <span class="entity-tag">ServicioAdicional</span>
+                    <span class="entity-tag">Factura</span>
+                    <span class="entity-tag">Empleado</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar reservas, servicios y facturación</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de habitación sin modificar Reserva</span>
+                    <span class="solid-tag lsp">LSP: Tipos de habitación sustituibles</span>
+                    <span class="solid-tag isp">ISP: Interfaces Reservable, Facturable, Serviciable</span>
+                    <span class="solid-tag dip">DIP: Calculador de tarifa con abstracción de estrategia</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 7 -->
+            <div class="project-card accent">
+                <h3><span class="group-badge">Grupo 7</span> Sistema de Gestión de Torneos Deportivos</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> SANTIAGO MARIN FRANCO (<a href="mailto:samarin-2025a@corhuila.edu.co">samarin-2025a@corhuila.edu.co</a>), JUAN ESTEBAN MUÑOZ VARGAS (<a href="mailto:jemunoz-2025a@corhuila.edu.co">jemunoz-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Plataforma para organizar y gestionar torneos deportivos: inscripción de equipos, generación de fixtures, registro de resultados, tabla de posiciones y estadísticas de jugadores.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Competencia (abstracta)</span>
+                    <span class="entity-tag">TorneoLiga</span>
+                    <span class="entity-tag">TorneoEliminacion</span>
+                    <span class="entity-tag">Equipo</span>
+                    <span class="entity-tag">Jugador</span>
+                    <span class="entity-tag">Partido</span>
+                    <span class="entity-tag">Resultado</span>
+                    <span class="entity-tag">TablaPosiciones</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar fixture, resultados y estadísticas</span>
+                    <span class="solid-tag ocp">OCP: Nuevos formatos de torneo sin modificar lógica</span>
+                    <span class="solid-tag lsp">LSP: Liga y Eliminación sustituibles como Competencia</span>
+                    <span class="solid-tag isp">ISP: Interfaces Clasificable, Programable, Estadistica</span>
+                    <span class="solid-tag dip">DIP: Generador de fixtures con abstracción de formato</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 8 -->
+            <div class="project-card success">
+                <h3><span class="group-badge">Grupo 8</span> Sistema de Gestión de Veterinaria</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> ISABELLA SALAS JARA (<a href="mailto:isalas-2025a@corhuila.edu.co">isalas-2025a@corhuila.edu.co</a>), ANDRES JULIAN SERNA RUEDA (<a href="mailto:ajserna-2025a@corhuila.edu.co">ajserna-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para una clínica veterinaria: registro de mascotas y propietarios, citas veterinarias, historial médico animal, vacunación, tratamientos y facturación de servicios.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Animal (abstracta)</span>
+                    <span class="entity-tag">Perro</span>
+                    <span class="entity-tag">Gato</span>
+                    <span class="entity-tag">Propietario</span>
+                    <span class="entity-tag">Veterinario</span>
+                    <span class="entity-tag">Cita</span>
+                    <span class="entity-tag">HistorialMedico</span>
+                    <span class="entity-tag">Vacuna</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar citas, historial y vacunación</span>
+                    <span class="solid-tag ocp">OCP: Nuevas especies sin modificar lógica veterinaria</span>
+                    <span class="solid-tag lsp">LSP: Perro y Gato sustituibles como Animal</span>
+                    <span class="solid-tag isp">ISP: Interfaces Vacunable, Diagnosticable, Tratable</span>
+                    <span class="solid-tag dip">DIP: Servicio de tratamiento depende de abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 9 -->
+            <div class="project-card warning">
+                <h3><span class="group-badge">Grupo 9</span> Sistema de Gestión de Transporte Urbano</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> SEBASTIAN ANDREY TOVAR TOVAR (<a href="mailto:satovar-2025a@corhuila.edu.co">satovar-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para gestionar rutas de transporte público urbano: buses, rutas, paradas, horarios, conductores, tarjetas de transporte con recarga y seguimiento de viajes del usuario.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Vehiculo (abstracta)</span>
+                    <span class="entity-tag">Bus</span>
+                    <span class="entity-tag">Microbus</span>
+                    <span class="entity-tag">Ruta</span>
+                    <span class="entity-tag">Parada</span>
+                    <span class="entity-tag">Conductor</span>
+                    <span class="entity-tag">TarjetaTransporte</span>
+                    <span class="entity-tag">Viaje</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar rutas, tarifas y viajes</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de vehículo sin modificar Ruta</span>
+                    <span class="solid-tag lsp">LSP: Bus y Microbus sustituibles como Vehiculo</span>
+                    <span class="solid-tag isp">ISP: Interfaces Rastreable, Recargable, Programable</span>
+                    <span class="solid-tag dip">DIP: Calculador de tarifa con abstracción de estrategia</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 10 -->
+            <div class="project-card info">
+                <h3><span class="group-badge">Grupo 10</span> Sistema de Gestión de Cine</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> SANTIAGO LOZANO MANTILLA (<a href="mailto:slozano-2024b@corhuila.edu.co">slozano-2024b@corhuila.edu.co</a>), DANIEL SANTIAGO VARGAS CALDERON (<a href="mailto:dsvargas-2024a@corhuila.edu.co">dsvargas-2024a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar un complejo de cines: cartelera de películas, salas con capacidad diferenciada, funciones por horario, venta de boletas, selección de asientos y snack bar.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Sala (abstracta)</span>
+                    <span class="entity-tag">Sala2D</span>
+                    <span class="entity-tag">Sala3D</span>
+                    <span class="entity-tag">Pelicula</span>
+                    <span class="entity-tag">Funcion</span>
+                    <span class="entity-tag">Boleta</span>
+                    <span class="entity-tag">Asiento</span>
+                    <span class="entity-tag">Cliente</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar cartelera, venta de boletas y snack bar</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de sala sin modificar Funcion</span>
+                    <span class="solid-tag lsp">LSP: Sala2D y Sala3D sustituibles como Sala</span>
+                    <span class="solid-tag isp">ISP: Interfaces Reservable, Proyectable, Vendible</span>
+                    <span class="solid-tag dip">DIP: Calculador de precio depende de abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 11 -->
+            <div class="project-card">
+                <h3><span class="group-badge">Grupo 11</span> Sistema de Gestión de Taller Mecánico</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> ALEX MAURICIO LOZANO OÑATE (<a href="mailto:amalozano-2025a@corhuila.edu.co">amalozano-2025a@corhuila.edu.co</a>), SANTIAGO MORALES ANGARITA (<a href="mailto:smorales-2024a@corhuila.edu.co">smorales-2024a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para un taller mecánico automotriz: recepción de vehículos, diagnóstico, órdenes de trabajo, inventario de repuestos, asignación de mecánicos y facturación de servicios.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Servicio (abstracta)</span>
+                    <span class="entity-tag">MantenimientoPreventivo</span>
+                    <span class="entity-tag">ReparacionCorrectiva</span>
+                    <span class="entity-tag">Vehiculo</span>
+                    <span class="entity-tag">OrdenTrabajo</span>
+                    <span class="entity-tag">Mecanico</span>
+                    <span class="entity-tag">Repuesto</span>
+                    <span class="entity-tag">Factura</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar diagnóstico, órdenes e inventario</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de servicio sin modificar OrdenTrabajo</span>
+                    <span class="solid-tag lsp">LSP: Preventivo y Correctivo sustituibles como Servicio</span>
+                    <span class="solid-tag isp">ISP: Interfaces Diagnosticable, Reparable, Facturable</span>
+                    <span class="solid-tag dip">DIP: Calculador de costos con abstracción de tarifa</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 12 -->
+            <div class="project-card accent">
+                <h3><span class="group-badge">Grupo 12</span> Sistema de Gestión de Inmobiliaria</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> JUAN JOSE TORRES RODRIGUEZ (<a href="mailto:jjotorres-2025a@corhuila.edu.co">jjotorres-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para una agencia inmobiliaria: gestión de propiedades en venta y arriendo (casas, apartamentos, locales), clientes interesados, visitas programadas, contratos y agentes inmobiliarios.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Propiedad (abstracta)</span>
+                    <span class="entity-tag">Casa</span>
+                    <span class="entity-tag">Apartamento</span>
+                    <span class="entity-tag">Local</span>
+                    <span class="entity-tag">Cliente</span>
+                    <span class="entity-tag">Agente</span>
+                    <span class="entity-tag">Visita</span>
+                    <span class="entity-tag">Contrato</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar catálogo, visitas y contratos</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de propiedad sin modificar búsqueda</span>
+                    <span class="solid-tag lsp">LSP: Casa, Apartamento y Local sustituibles</span>
+                    <span class="solid-tag isp">ISP: Interfaces Visitable, Arrendable, Vendible</span>
+                    <span class="solid-tag dip">DIP: Servicio de valoración con abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 13 -->
+            <div class="project-card success">
+                <h3><span class="group-badge">Grupo 13</span> Sistema de Gestión de Farmacia</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> ANDRES BARRIOS TAFUR (<a href="mailto:anbarrios-2025a@corhuila.edu.co">anbarrios-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar una farmacia: catálogo de medicamentos (genéricos y de marca), control de inventario con lotes y vencimientos, ventas con y sin fórmula médica, proveedores y alertas de stock bajo.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Medicamento (abstracta)</span>
+                    <span class="entity-tag">MedicamentoGenerico</span>
+                    <span class="entity-tag">MedicamentoMarca</span>
+                    <span class="entity-tag">Lote</span>
+                    <span class="entity-tag">Venta</span>
+                    <span class="entity-tag">FormulaMedica</span>
+                    <span class="entity-tag">Proveedor</span>
+                    <span class="entity-tag">AlertaStock</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar inventario, ventas y alertas</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de medicamento sin modificar Venta</span>
+                    <span class="solid-tag lsp">LSP: Genérico y Marca sustituibles como Medicamento</span>
+                    <span class="solid-tag isp">ISP: Interfaces Vendible, Controlable, Alertable</span>
+                    <span class="solid-tag dip">DIP: Servicio de alertas con abstracción de canal</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 14 -->
+            <div class="project-card warning">
+                <h3><span class="group-badge">Grupo 14</span> Sistema de Gestión de Parqueadero</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> JHOJAN DAVI GORDILLO LOPEZ (<a href="mailto:jdgordillo-2025a@corhuila.edu.co">jdgordillo-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para administrar un parqueadero: registro de vehículos por tipo (carro, moto, bicicleta), espacios disponibles por zona, tickets de ingreso/salida, tarifas diferenciadas y abonos mensuales.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Vehiculo (abstracta)</span>
+                    <span class="entity-tag">Carro</span>
+                    <span class="entity-tag">Moto</span>
+                    <span class="entity-tag">Bicicleta</span>
+                    <span class="entity-tag">EspacioParqueo</span>
+                    <span class="entity-tag">Ticket</span>
+                    <span class="entity-tag">Tarifa</span>
+                    <span class="entity-tag">Abono</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar control de acceso, tarifas y abonos</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de vehículo sin modificar tarifa</span>
+                    <span class="solid-tag lsp">LSP: Carro, Moto y Bicicleta sustituibles</span>
+                    <span class="solid-tag isp">ISP: Interfaces Tarifable, Abonado, Registrable</span>
+                    <span class="solid-tag dip">DIP: Calculador de tarifa con abstracción de estrategia</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 15 -->
+            <div class="project-card info">
+                <h3><span class="group-badge">Grupo 15</span> Sistema de Gestión de Envíos y Paquetería</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> JULIAN DAVID MORENO TOVAR (<a href="mailto:jdmoreno-2025a@corhuila.edu.co">jdmoreno-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema de logística para una empresa de paquetería: registro de paquetes con dimensiones y peso, tipos de envío (estándar, express, internacional), seguimiento de estado, rutas de distribución y centros de acopio.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Envio (abstracta)</span>
+                    <span class="entity-tag">EnvioEstandar</span>
+                    <span class="entity-tag">EnvioExpress</span>
+                    <span class="entity-tag">Paquete</span>
+                    <span class="entity-tag">Remitente</span>
+                    <span class="entity-tag">Destinatario</span>
+                    <span class="entity-tag">RutaDistribucion</span>
+                    <span class="entity-tag">CentroAcopio</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar registro, seguimiento y tarifación</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de envío sin modificar lógica</span>
+                    <span class="solid-tag lsp">LSP: Estándar y Express sustituibles como Envio</span>
+                    <span class="solid-tag isp">ISP: Interfaces Rastreable, Tarifable, Entregable</span>
+                    <span class="solid-tag dip">DIP: Servicio de rastreo con abstracción de proveedor</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 16 -->
+            <div class="project-card">
+                <h3><span class="group-badge">Grupo 16</span> Sistema de Gestión de Plataforma de Cursos Online</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> JONATTAN MOSQUERA REINOSO (<a href="mailto:jmosquera-2025a@corhuila.edu.co">jmosquera-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Plataforma educativa tipo e-learning: catálogo de cursos con módulos y lecciones, inscripciones de estudiantes, seguimiento de progreso, evaluaciones con diferentes tipos de preguntas y certificados.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">ContenidoCurso (abstracta)</span>
+                    <span class="entity-tag">Leccion</span>
+                    <span class="entity-tag">Evaluacion</span>
+                    <span class="entity-tag">Curso</span>
+                    <span class="entity-tag">Modulo</span>
+                    <span class="entity-tag">Estudiante</span>
+                    <span class="entity-tag">Inscripcion</span>
+                    <span class="entity-tag">Certificado</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar catálogo, inscripciones y evaluaciones</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de contenido sin modificar Curso</span>
+                    <span class="solid-tag lsp">LSP: Leccion y Evaluacion sustituibles como ContenidoCurso</span>
+                    <span class="solid-tag isp">ISP: Interfaces Evaluable, Certificable, Progresable</span>
+                    <span class="solid-tag dip">DIP: Servicio de certificación con abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 17 -->
+            <div class="project-card accent">
+                <h3><span class="group-badge">Grupo 17</span> Sistema de Gestión de Evento y Boletería</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> LAURA ISABELLA RODRÍGUEZ BERMEO (<a href="mailto:lirodriguez-2025a@corhuila.edu.co">lirodriguez-2025a@corhuila.edu.co</a>), ESTEFANIA ZABALA CRUZ (<a href="mailto:ezabala-2025a@corhuila.edu.co">ezabala-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para organizar eventos (conciertos, conferencias, ferias): creación de eventos con localidades, venta de boletas con diferentes categorías, control de aforo, lista de asistentes y patrocinadores.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">Evento (abstracta)</span>
+                    <span class="entity-tag">Concierto</span>
+                    <span class="entity-tag">Conferencia</span>
+                    <span class="entity-tag">Localidad</span>
+                    <span class="entity-tag">Boleta</span>
+                    <span class="entity-tag">Asistente</span>
+                    <span class="entity-tag">Patrocinador</span>
+                    <span class="entity-tag">Lugar</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar eventos, boletería y patrocinios</span>
+                    <span class="solid-tag ocp">OCP: Nuevos tipos de evento sin modificar Boleta</span>
+                    <span class="solid-tag lsp">LSP: Concierto y Conferencia sustituibles como Evento</span>
+                    <span class="solid-tag isp">ISP: Interfaces Vendible, Programable, Patrocinado</span>
+                    <span class="solid-tag dip">DIP: Servicio de venta con abstracción de pago</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 18 -->
+            <div class="project-card success">
+                <h3><span class="group-badge">Grupo 18</span> Sistema de Gestión de Reservas de Vuelos</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> SAMUEL RODRIGUEZ SERRANO (<a href="mailto:sarodriguez-2025a@corhuila.edu.co">sarodriguez-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema de reservas aéreas: gestión de vuelos con origen/destino, aviones con clases de servicio (económica, ejecutiva, primera), pasajeros, reservas, equipaje y tarjeta de embarque.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">ClaseServicio (abstracta)</span>
+                    <span class="entity-tag">Economica</span>
+                    <span class="entity-tag">Ejecutiva</span>
+                    <span class="entity-tag">Vuelo</span>
+                    <span class="entity-tag">Avion</span>
+                    <span class="entity-tag">Pasajero</span>
+                    <span class="entity-tag">Reserva</span>
+                    <span class="entity-tag">TarjetaEmbarque</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar vuelos, reservas y embarque</span>
+                    <span class="solid-tag ocp">OCP: Nuevas clases de servicio sin modificar Reserva</span>
+                    <span class="solid-tag lsp">LSP: Económica y Ejecutiva sustituibles como ClaseServicio</span>
+                    <span class="solid-tag isp">ISP: Interfaces Reservable, Embarcable, Equipajeable</span>
+                    <span class="solid-tag dip">DIP: Calculador de tarifa depende de abstracción</span>
+                </div>
+            </div>
+
+            <!-- GRUPO 20 -->
+            <div class="project-card info">
+                <h3><span class="group-badge">Grupo 20</span> Sistema de Gestión de Refugio de Animales</h3>
+                <div class="members">
+                    <strong>👤 Integrantes:</strong> ANDRES FELIPE ARENAS CARDENAS (<a href="mailto:afarenas-2025a@corhuila.edu.co">afarenas-2025a@corhuila.edu.co</a>)
+                </div>
+                <p><strong>Descripción:</strong> Sistema para un refugio de animales: registro de animales rescatados por especie y estado de salud, proceso de adopción, padrinos voluntarios, campañas de esterilización y registro de donaciones.</p>
+                <p><strong>Entidades mínimas:</strong></p>
+                <div class="entity-list">
+                    <span class="entity-tag">AnimalRefugio (abstracta)</span>
+                    <span class="entity-tag">PerroRefugio</span>
+                    <span class="entity-tag">GatoRefugio</span>
+                    <span class="entity-tag">Adoptante</span>
+                    <span class="entity-tag">ProcesoAdopcion</span>
+                    <span class="entity-tag">Padrino</span>
+                    <span class="entity-tag">CampanaSalud</span>
+                    <span class="entity-tag">Donacion</span>
+                </div>
+                <p><strong>Principios SOLID a destacar:</strong></p>
+                <div class="solid-tags">
+                    <span class="solid-tag srp">SRP: Separar adopciones, donaciones y campañas</span>
+                    <span class="solid-tag ocp">OCP: Nuevas especies sin modificar ProcesoAdopcion</span>
+                    <span class="solid-tag lsp">LSP: PerroRefugio y GatoRefugio sustituibles</span>
+                    <span class="solid-tag isp">ISP: Interfaces Adoptable, Apadrinable, Donable</span>
+                    <span class="solid-tag dip">DIP: Servicio de adopción con abstracción de validación</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 7: RESUMEN DE ASIGNACIONES ==================== -->
+        <section id="resumen">
+            <h2>6. Resumen de Asignaciones</h2>
+
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Proyecto</th>
+                            <th>Integrantes</th>
+                            <th># Miembros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Grupo 1</strong></td>
+                            <td>Sistema de Gestión de Biblioteca Digital</td>
+                            <td>Keneth Cardenas, Luis Masmela</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 2</strong></td>
+                            <td>Sistema de Gestión de Restaurante</td>
+                            <td>Oscar Becerra, Loren Orrego</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 3</strong></td>
+                            <td>Sistema de Gestión de Hospital</td>
+                            <td>Sergio Benavides, Hector Rojas</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 4</strong></td>
+                            <td>Sistema de Gestión de Tienda de Videojuegos</td>
+                            <td>Daniel Pareja, Alex Uribe</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 5</strong></td>
+                            <td>Sistema de Gestión de Gimnasio</td>
+                            <td>Giovanny Puentes, Melannie Sanchez</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 6</strong></td>
+                            <td>Sistema de Gestión de Hotel</td>
+                            <td>Juan Urueña, David Vargas J.</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 7</strong></td>
+                            <td>Sistema de Gestión de Torneos Deportivos</td>
+                            <td>Santiago Marin, Juan Muñoz</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 8</strong></td>
+                            <td>Sistema de Gestión de Veterinaria</td>
+                            <td>Isabella Salas, Andres Serna</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 9</strong></td>
+                            <td>Sistema de Gestión de Transporte Urbano</td>
+                            <td>Sebastian Tovar</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 10</strong></td>
+                            <td>Sistema de Gestión de Cine</td>
+                            <td>Santiago Lozano, Daniel Vargas C.</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 11</strong></td>
+                            <td>Sistema de Gestión de Taller Mecánico</td>
+                            <td>Alex Lozano, Santiago Morales</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 12</strong></td>
+                            <td>Sistema de Gestión de Inmobiliaria</td>
+                            <td>Juan Torres</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 13</strong></td>
+                            <td>Sistema de Gestión de Farmacia</td>
+                            <td>Andres Barrios</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 14</strong></td>
+                            <td>Sistema de Gestión de Parqueadero</td>
+                            <td>Jhojan Gordillo</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 15</strong></td>
+                            <td>Sistema de Gestión de Envíos y Paquetería</td>
+                            <td>Julian Moreno</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 16</strong></td>
+                            <td>Sistema de Gestión de Plataforma de Cursos Online</td>
+                            <td>Jonattan Mosquera</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 17</strong></td>
+                            <td>Sistema de Gestión de Evento y Boletería</td>
+                            <td>Laura Rodríguez, Estefania Zabala</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 18</strong></td>
+                            <td>Sistema de Gestión de Reservas de Vuelos</td>
+                            <td>Samuel Rodriguez</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grupo 20</strong></td>
+                            <td>Sistema de Gestión de Refugio de Animales</td>
+                            <td>Andres Arenas</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <!-- ==================== SECCIÓN 8: CRONOGRAMA ==================== -->
+        <section id="cronograma">
+            <h2>7. Cronograma de Entregas</h2>
+
+            <div class="info-box">
+                <h4>📌 El proyecto se divide en dos entregas alineadas con los cortes académicos</h4>
+                <p>Cada entrega tiene una fecha de subida a GitHub y una fecha de sustentación oral en clase. Ambas entregas tienen peso equitativo.</p>
+            </div>
+
+            <h3>📦 Entrega 1 — Segundo Corte: Modelado y Estructura Base</h3>
+
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>📅 Entrega en GitHub</strong></td>
+                            <td>Subir repositorio con diagrama UML, estructura base del código y documentación parcial</td>
+                            <td><strong>17 de Abril de 2026</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🎤 Sustentación oral</strong></td>
+                            <td>Presentación en clase del diagrama y la estructura base implementada</td>
+                            <td><strong>21 de Abril de 2026 (Martes)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="definition-box">
+                <h4>Alcance de la Entrega 1:</h4>
+                <ul>
+                    <li>✅ Diagrama de clases UML completo (mínimo 6 clases, relaciones, multiplicidad, clase abstracta e interfaces)</li>
+                    <li>✅ Estructura del proyecto Java creada y organizada por paquetes</li>
+                    <li>✅ Clases base implementadas con atributos, constructores, getters/setters y visibilidad correcta</li>
+                    <li>✅ Herencia y clase abstracta implementadas</li>
+                    <li>✅ Interfaces definidas (mínimo 2)</li>
+                    <li>✅ README.md parcial: descripción del sistema, diagrama UML exportado y explicación de relaciones</li>
+                </ul>
+            </div>
+
+            <hr class="divider">
+
+            <h3>📦 Entrega 2 — Tercer Corte: Implementación SOLID y Documentación Final</h3>
+
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>📅 Entrega en GitHub</strong></td>
+                            <td>Subir repositorio completo con implementación SOLID, lógica de negocio y documentación final</td>
+                            <td><strong>22 de Mayo de 2026</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🎤 Sustentación oral</strong></td>
+                            <td>Presentación final del proyecto completo con demostración de principios SOLID</td>
+                            <td><strong>26 de Mayo de 2026 (Lunes)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="definition-box">
+                <h4>Alcance de la Entrega 2:</h4>
+                <ul>
+                    <li>✅ Implementación completa de los <strong>5 principios SOLID</strong> con justificación en código</li>
+                    <li>✅ Lógica de negocio funcional en las clases de servicio</li>
+                    <li>✅ Polimorfismo y composición aplicados correctamente</li>
+                    <li>✅ Clase <code>Main</code> que demuestre el funcionamiento completo del sistema</li>
+                    <li>✅ README.md final con sección <strong>"Aplicación de Principios SOLID"</strong> con fragmentos de código</li>
+                    <li>✅ Conclusiones y lecciones aprendidas</li>
+                </ul>
+            </div>
+
+            <hr class="divider">
+
+            <h3>📊 Resumen del Cronograma</h3>
+
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Entrega</th>
+                            <th>Corte</th>
+                            <th>Alcance</th>
+                            <th>GitHub</th>
+                            <th>Sustentación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Entrega 1</strong></td>
+                            <td>Segundo Corte</td>
+                            <td>Diagrama UML + Estructura base Java + Herencia + Interfaces + README parcial</td>
+                            <td><strong>17 Abr 2026</strong></td>
+                            <td><strong>21 Abr 2026</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Entrega 2</strong></td>
+                            <td>Tercer Corte</td>
+                            <td>SOLID completo + Lógica de negocio + Main funcional + README final</td>
+                            <td><strong>22 May 2026</strong></td>
+                            <td><strong>26 May 2026</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Recomendaciones Finales</h4>
+                <ul>
+                    <li>Comenzar por identificar las <strong>entidades del dominio</strong> y sus atributos</li>
+                    <li>Definir las <strong>relaciones</strong> antes de escribir código</li>
+                    <li>Aplicar SOLID <strong>desde el diseño</strong>, no como corrección posterior</li>
+                    <li>Hacer <strong>commits frecuentes</strong> con mensajes descriptivos</li>
+                    <li>Revisar la <a href="../01-session/diagrama-de-clases.html">guía de Diagramas de Clases UML</a> para notación correcta</li>
+                    <li>No dejar todo para el final — cada entrega tiene sustentación individual</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <h3>Proyecto — Diagramación de Clases y Principios SOLID</h3>
+            <p><strong>Creado por:</strong> Ing. Julian Quimbayo Castro</p>
+            <p>Última actualización: Marzo 2026</p>
+            <p>Este material es de uso educativo y está diseñado para estudiantes de Ingeniería de Sistemas.</p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">© Corporación Universitaria del Huila — Corhuila</p>
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" title="Volver arriba">↑</button>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    setupScrollButton();
+    setupNavigation();
+    setupSmoothScroll();
+    highlightActiveSection();
+});
+
+function setupScrollButton() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', function() {
+        if (document.documentElement.scrollTop > 300 || document.body.scrollTop > 300) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+
+    scrollBtn.addEventListener('click', function() {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    });
+}
+
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
+
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    window.addEventListener('scroll', highlightActiveSection);
+}
+
+function highlightActiveSection() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    let current = '';
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+document.querySelectorAll('pre').forEach(pre => {
+    const button = document.createElement('button');
+    button.textContent = '📋 Copiar';
+    button.style.cssText = `
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        padding: 8px 12px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 10;
+    `;
+
+    pre.style.position = 'relative';
+    pre.appendChild(button);
+
+    pre.addEventListener('mouseenter', () => {
+        button.style.opacity = '1';
+    });
+
+    pre.addEventListener('mouseleave', () => {
+        button.style.opacity = '0';
+    });
+
+    button.addEventListener('click', () => {
+        const code = pre.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            button.textContent = '✅ Copiado';
+            setTimeout(() => {
+                button.textContent = '📋 Copiar';
+            }, 2000);
+        });
+    });
+});
+    </script>
+</body>
+</html>
